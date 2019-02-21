@@ -4,14 +4,14 @@ module.exports = {
   getMeetingHistory,
   saveMeeting,
   getUsersByMeetingId,
-  getAllUsers
+  getAllUsers  
 }
 
-function getMeetingHistory(testDb) {
+function getMeetingHistory (testDb) {
   const db = testDb || connection
   return db('meetings')
-    .join('meetings-users', 'meetings-users.meeting_id', 'meeting')
-
+  .join('meetings-users', 'meetings-users.meeting_id', 'meeting')
+  
 }
 
 // function getMonthVeges(monthId, db = connection){
