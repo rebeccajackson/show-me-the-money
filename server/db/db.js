@@ -55,7 +55,8 @@ function saveMeeting(meeting, testDb){
     owner_id: meeting.owner_id,
     startTime: meeting.startTime,
     endTime: meeting.endTime,
-    duration: meeting.duration
+    duration: meeting.duration,
+    cost: meeting.cost
   }).then(newMeetingId => {
     return db('meetings_users')
     .insert({meeting_id: newMeetingId, user_id: meeting.attendees.id})
