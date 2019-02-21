@@ -11,6 +11,12 @@ export class History extends Component {
       meetings: ""
     };
   }
+
+  // handleclick for link to show
+  handleClick = e => {
+    console.log(e);
+  };
+
   render() {
     return (
       <div className="history-page">
@@ -28,7 +34,10 @@ export class History extends Component {
           <div className="tile is-parent column is-half">
             <article className="tile is-child notification is-danger">
               <p className="title">put list of meetings here</p>
-              {/* pass meetings array in via props and map over array to get data put in a link tag*/}
+              {this.props.meetings.meetings.map(meeting => {
+                console.log(meeting);
+                // add a handleclick event to link on data name
+              })}
               <div className="content" />
             </article>
           </div>
@@ -43,18 +52,19 @@ export class History extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-// return {
+const mapStateToProps = state => {
+  return {
+    meetings: state.meetings
+  };
+};
 
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    getMeetings: item => dispatch(getAllMeetings(item))
+  };
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-
-//   }
-// }
-
-export default connect()(History);
-// mapStateToProps,
-// mapDispatchToProps
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(History);
