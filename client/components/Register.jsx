@@ -56,7 +56,7 @@ class Register extends React.Component {
             <input required className="input is-large has-text-centered is-fullwidth" placeholder="Confirm Password" type="password" name="confirm_password" onChange={this.updateDetails}/>
           </label>
         </div>
-        <input className="button is-success is-large is-fullwidth" value="Register" type="submit" />
+        <Link to='/newmeeting' ><input className="button is-success is-large is-fullwidth" value="Register" type="submit" /></Link>
       </form>
     )
   }
