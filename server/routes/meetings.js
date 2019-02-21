@@ -4,7 +4,8 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.get('/meetings', (req,res)=>{
+// GET /api/meetings
+router.get('/', (req,res)=>{
   console.log('get all meetings')
   db.getMeetingHistory() //needs to output an array of meeting objects
   .then(meetings => {
@@ -13,8 +14,10 @@ router.get('/meetings', (req,res)=>{
   })
 })
 
-router.post('/meetings', (req,res) => {
-  console.log('routes save meeting by name', req.body)
+
+// POST /api/meetings
+router.post('/', (req,res) => {
+  console.log('routes save meeting by title', req.body)
   db.saveMeeting(req.body)
   .then(newMeetingId =>{
     console.log('routes newMeetingId', newMeetingId)
@@ -22,7 +25,8 @@ router.post('/meetings', (req,res) => {
   })
 })
 
-router.get('/meetings/:id/users', (req,res)=>{
+// GET /api/meetings/:id/users
+router.get('/:id/users', (req,res)=>{
   console.log('get users by meeting id', req.params.id)
   db.getUsersByMeetingId() //needs to output an array of users objects
   .then(users => {

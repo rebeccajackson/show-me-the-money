@@ -26,7 +26,7 @@ function getUsersByMeetingId(meetingId, testDb){
 function saveMeeting(testDb){
   const db = testDb || connection
   return('meetings')
-  .join('meetings-users', )
+  // .join('meetings-users')
 }
 
 function getAllUsers(testDb){

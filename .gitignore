@@ -4,7 +4,6 @@ npm-debug.log
 dev.sqlite3
 bundle.js
 bundle.js.map
-.env
 *bundle
 
 # Logs
@@ -64,7 +63,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+# .env
 
 # next.js build output
 .next
