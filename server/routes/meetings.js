@@ -10,7 +10,6 @@ router.get('/', (req,res)=>{
   console.log(res)
   db.getMeetingHistory() //needs to output an array of meeting objects
   .then(meetings => {
-    console.log('routes array of meetings', meetings)
     res.json(meetings)
   })
 })
@@ -18,8 +17,10 @@ router.get('/', (req,res)=>{
 
 // POST /api/meetings
 router.post('/', (req,res) => {
+  console.log('routes save meeting by title', req.body)
   db.saveMeeting(req.body)
   .then(newMeetingId =>{
+    console.log('routes newMeetingId', newMeetingId)
     res.json(newMeetingId)
   })
 })

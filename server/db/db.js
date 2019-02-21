@@ -10,9 +10,18 @@ module.exports = {
 function getMeetingHistory (testDb) {
   const db = testDb || connection
   return db('meetings')
-  .join('meetings_users', 'meetings_users.meeting_id', 'meetings.id')
-  .join('users', 'users.id', 'meetings_users.user_id')
-  .select().orderBy('meetings.id', 'desc')
+  .select('*', 'meetings.id as id').orderBy('meetings.id', 'desc')
+  .then(async meetings => {
+    return await Promise.all(meetings.map(meeting => {
+        return db('meetings_users').where('meetings_users.meeting_id', meeting.id)
+        .join('users', 'meetings_users.user_id', 'users.id')
+        .select('users.id as id', 'first_name', 'last_name', 'hourly_wage')
+        .then(attendees => {
+            meeting.attendees = attendees
+            return meeting
+        })
+    }))
+  })
 }
 
 function getUsersByMeetingId(meetingId, testDb){
@@ -24,10 +33,20 @@ function getUsersByMeetingId(meetingId, testDb){
   .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage').orderBy('lastName')
 }
 
-function saveMeeting(testDb){
+function saveMeeting(meeting, testDb){
   const db = testDb || connection
+  console.log('db save', meeting)
   return db('meetings')
-  .join('meetings_users')
+  .insert({
+    title: meeting.title, 
+    owner_id: meeting.owner_id,
+    startTime: meeting.startTime,
+    endTime: meeting.endTime,
+    duration: meeting.duration
+  }).then(newMeetingId => {
+    return db('meetings_users')
+    .insert({meeting_id: newMeetingId, user_id: meeting.attendees.id})
+  })
 }
 
 function getAllUsers(testDb){
