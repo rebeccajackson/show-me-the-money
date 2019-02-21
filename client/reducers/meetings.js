@@ -6,12 +6,12 @@ import {
   SET_MEETING
 } from "../actions/getMeetings.js";
 
-const intialState = {
+const initialState = {
   meetings: [],
   loading: false
 };
 
-function meetings(state = intialState, action) {
+function meetings(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_MEETINGS:
       return {
