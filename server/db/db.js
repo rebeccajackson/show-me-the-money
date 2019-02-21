@@ -11,9 +11,18 @@ module.exports = {
 function getMeetingHistory (testDb) {
   const db = testDb || connection
   return db('meetings')
-  .join('meetings_users', 'meetings_users.meeting_id', 'meetings.id')
-  .join('users', 'users.id', 'meetings_users.user_id')
-  .select().orderBy('meetings.id', 'desc')
+  .select('*', 'meetings.id as id').orderBy('meetings.id', 'desc')
+  .then(async meetings => {
+    return await Promise.all(meetings.map(meeting => {
+        return db('meetings_users').where('meetings_users.meeting_id', meeting.id)
+        .join('users', 'meetings_users.user_id', 'users.id')
+        .select('users.id as id', 'first_name', 'last_name', 'hourly_wage')
+        .then(attendees => {
+            meeting.attendees = attendees
+            return meeting
+        })
+    }))
+  })
 }
 
 function getUsersByMeetingId(meetingId, testDb){
