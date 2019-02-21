@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
+// import Nav from '../components/Nav'
+
 class NewMeeting extends Component {
   constructor(props) {
     super(props)
@@ -14,9 +16,18 @@ class NewMeeting extends Component {
   }
   render() {
     return (
-      <React.Component>
+      <React.Fragment>
+        < div class="columns" >
+          < div class="column is-half" >
+            <input className="input" type="text" placeholder="Atendee Name"></input>
+            <input className="input" type="number" placeholder="Atendee Hourly Wage"></input>
+            <div className="control">
+              <button className="button is-link">Submit</button>
+            </div>
+          </div >
+        </div >
 
-      </React.Component>
+      </React.Fragment>
     )
   }
 }
@@ -26,3 +37,6 @@ function MapDispatchToProps(dispatch) {
 }
 
 export default connect(null, MapDispatchToProps)(NewMeeting)
+
+  // < div class="column" > Auto</div >
+  //   <div class="column">Auto</div>
