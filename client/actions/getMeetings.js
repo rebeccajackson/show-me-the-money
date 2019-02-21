@@ -38,13 +38,12 @@ export const showError = (errorMessage) => {
 }
 
 export function getAllMeetings() {
-    const token = getApiToken()
     return dispatch => {
         dispatch(loading())
         return request
-        .get('api/v1/meetings')
-        .set("Authorization", "Bearer " + token)
+        .get('api/meetings')
         .then(res => {
+            console.log(res)
             dispatch(receiveMeetings(res.body))})
         .catch(err => {
             dispatch(showError(err.message))
@@ -52,13 +51,11 @@ export function getAllMeetings() {
 }}
 
 export function getMeetings(meetingId) {
-    const token = getApiToken()
     return dispatch => {
         console.log('hey');
         dispatch(loading())
         return request
-        .get(`api/v1/meetings/${meetingId}`)
-        .set("Authorization", "Bearer " + token)
+        .get(`api/meetings/${meetingId}`)
         .then(res => {
             console.log(res.body)
             if(!res.body.length == 1) {
