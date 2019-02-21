@@ -11,7 +11,7 @@ function getMeetingHistory (testDb) {
   const db = testDb || connection
   return db('meetings')
   .join('meetings-users', 'meetings-users.meeting_id', 'meeting')
-
+  
 }
 
 // function getMonthVeges(monthId, db = connection){
