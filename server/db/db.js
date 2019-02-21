@@ -4,6 +4,7 @@ module.exports = {
   getMeetingHistory,
   saveMeeting,
   getUsersByMeetingId,
+  getMeetingById,
   getAllUsers  
 }
 
@@ -31,6 +32,13 @@ function getUsersByMeetingId(meetingId, testDb){
   .where('meetings_users.meeting_id', meetingId)
   .join('users', 'meetings_users.user_id', 'users.id')
   .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage').orderBy('lastName')
+}
+
+function getMeetingById(meetingId, testDb){
+  const db = testDb || connection
+  console.log('db', meetingId)
+  return db('meetings')
+  .where('meetings.id', meetingId)
 }
 
 function saveMeeting(meeting, testDb){
