@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
         table.integer('startTime')
         table.integer('endTime')
         table.integer('duration')
+        table.integer('total_cost')
     })
 };
 
