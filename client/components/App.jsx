@@ -1,15 +1,16 @@
 import React from 'react'
-import {HashRouter as Router, Route, Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+import { HashRouter as Router, Route, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Login from './Login'
 import Register from './Register'
 import Nav from './Nav'
 import Meeting from '../containers/Meeting'
+import NewMeeting from '../containers/NewMeeting'
 import History from './History'
 import PostMeeting from './PostMeeting';
 
-export function App({auth}) {
+export function App({ auth }) {
   return (
     <Router>
       <div className="container has-text-centered">
@@ -29,9 +30,10 @@ export function App({auth}) {
           }
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/newmeeting" component={NewMeeting} />
           <Route exact path="/meeting" component={Meeting} />
           <Route path="/history" component={History} />
-          <Route path="/meeting/:meetingId" component={PostMeeting} /> 
+          <Route path="/meeting/:meetingId" component={PostMeeting} />
         </div>
 
       </div>
@@ -39,7 +41,7 @@ export function App({auth}) {
   )
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({ auth }) => {
   return {
     auth
   }
