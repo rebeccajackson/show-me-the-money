@@ -1,10 +1,9 @@
-// WE NEED TO IMPORT THE VARIABLES FROM ACTIONS AND CHANGE HERE
 import {
   RECEIVE_MEETINGS,
   REQUEST_MEETINGS,
   SHOW_ERROR,
   SAVE_MEETING
-} from "../actions";
+} from "../actions/getMeetings.js";
 
 const intialState = {
   meetings: [],
