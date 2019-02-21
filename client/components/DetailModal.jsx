@@ -5,7 +5,17 @@ import { connect } from "react-redux";
 export class DetailModal extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      meetingId: null
+    };
   }
+
+  componentDidMount() {
+    this.setState({
+      meetingId: this.props.meetings.meetingId
+    });
+  }
+
   render() {
     if (this.props.isShowing) {
       return (
@@ -23,13 +33,14 @@ export class DetailModal extends Component {
             <section className="modal-card-body">
               {this.props.meeting.meetings.map(detail => {
                 // Check MeetingHistory - need Object Keys: to compare id to id
-                if (detail.id == this.props.meetings.id) {
+                console.log(this.props.meetings.meetingId);
+                if (detail.id == this.props.meetings.meetingId) {
                   return (
                     <div>
                       <p>Name: {detail.title}</p>
                       <p>Duration: {detail.duration}</p>
                       <p>Cost: {detail.cost}</p>
-                      <p>Attendees: {detail.attendees}</p>
+                      {/* <p>Attendees: {detail.attendees}</p> */}
                     </div>
                   );
                 }
@@ -49,9 +60,10 @@ export class DetailModal extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ meetings, meetingId }) => {
   return {
-    meetings: state.meetings
+    meetings,
+    meetingId
   };
 };
 

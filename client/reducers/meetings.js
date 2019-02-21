@@ -37,7 +37,7 @@ function meetings(state = initialState, action) {
     case SET_MEETING:
       return {
         ...state,
-        meetingData: action.meetingData
+        meetingId: action.meetingId
       };
     default:
       return state;
