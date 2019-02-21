@@ -1,11 +1,10 @@
 import request from 'superagent'
-import { getApiToken } from '../utils/auth'
-
-
 
 export const SHOW_ERROR = 'SHOW_ERROR'
 export const REQUEST_MEETINGS = 'REQUEST_MEETINGS'
 export const RECEIVE_MEETINGS = 'RECEIVE_MEETINGS'
+export const RECEIVE_USERS = 'RECEIVE_USERS'
+export const SAVE_MEETING = 'SAVE_MEETING'
 
 export const loading = () => {
     return {
@@ -22,12 +21,21 @@ export const receiveMeetings = meetings => {
     }
 }
 
-// export function getMeeting(meetingId) {
-//     return {
-//         type: GET_MEETINGS,
-//         payload: meetings
-//     }
-// }
+export const receiveUsers = users => {
+    return {
+        type: RECEIVE_USERS,
+        users: users,
+        loading: false
+    }
+}
+
+export const saveMeeting = meeting => {
+    return {
+        type: SAVE_MEETING,
+        meeting: meeting,
+        loading: false
+    }
+}
 
 export const showError = (errorMessage) => {
     return {    
@@ -43,21 +51,18 @@ export function getAllMeetings() {
         return request
         .get('api/meetings')
         .then(res => {
-            console.log(res)
             dispatch(receiveMeetings(res.body))})
         .catch(err => {
             dispatch(showError(err.message))
     })
 }}
 
-export function getMeetings(meetingId) {
+export function getMeetingById(meetingId) {
     return dispatch => {
-        console.log('hey');
         dispatch(loading())
         return request
         .get(`api/meetings/${meetingId}`)
         .then(res => {
-            console.log(res.body)
             if(!res.body.length == 1) {
                 dispatch(showError('nothing g'))
             } else {
@@ -69,6 +74,19 @@ export function getMeetings(meetingId) {
     })
 }}
 
+export function getUsersByMeeting(meetingId) {
+    return dispatch => {
+        dispatch(loading())
+        return request
+        .get(`api/meetings/${meetingId}/users`)
+        .then(res => {
+            dispatch(receiveUsers(res.body))})
+        .catch(err => {
+            dispatch(showError(err.message))
+        })
+    }
+}
+
 
 export function saveMeeting(meeting) {
     console.log(meeting);
@@ -77,10 +95,9 @@ export function saveMeeting(meeting) {
       return request
         .post(`/api/v1/meetings/save`, meeting)
         .then(res => {
-          dispatch(receiveMeetings(res.body));
-        })
+            dispatch(receiveMeetings(res.body))})
         .catch(err => {
-          dispatch(showError(err.message));
-        });
+            dispatch(showError(err.message))
+        })
     };
 }
