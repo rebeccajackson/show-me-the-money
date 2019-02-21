@@ -25,20 +25,25 @@ function getMeetingHistory(testDb) {
     })
 }
 
-function getUsersByMeetingId(meetingId, testDb) {
-  const db = testDb || connection
-  console.log('db', meetingId)
-  return db('meetings_users')
-    .where('meetings_users.meeting_id', meetingId)
+function getUsersByMeetingId(id, testDb){
+    const db = testDb || connection
+    return db('meetings_users').where('meetings_users.meeting_id', id)
     .join('users', 'meetings_users.user_id', 'users.id')
-    .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage').orderBy('lastName')
+    .select('users.id as id', 'first_name', 'last_name', 'hourly_wage')
 }
 
 function getMeetingById(meetingId, testDb) {
   const db = testDb || connection
-  console.log('db', meetingId)
-  return db('meetings')
-    .where('meetings.id', meetingId)
+    return db('meetings').where('meetings.id', meetingId).first()
+    .then(meeting => {
+        return db('meetings_users').where('meetings_users.meeting_id', meeting.id)
+        .join('users', 'meetings_users.user_id', 'users.id')
+        .select('users.id as id', 'first_name', 'last_name', 'hourly_wage')
+        .then(attendees => {
+            meeting.attendees = attendees
+            return meeting
+        })
+    })
 }
 
 function saveMeeting(meeting, testDb) {
