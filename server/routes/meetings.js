@@ -6,6 +6,7 @@ router.use(express.json())
 
 // GET /api/meetings
 router.get('/', (req,res)=>{
+
   db.getMeetingHistory() //needs to output an array of meeting objects
   .then(meetings => {
     res.json(meetings)
@@ -17,9 +18,9 @@ router.get('/', (req,res)=>{
 router.post('/', (req,res) => {
   console.log('routes save meeting by title', req.body)
   db.saveMeeting(req.body)
-  .then(newMeetingId =>{
-    console.log('routes newMeetingId', newMeetingId)
-    res.json(newMeetingId)
+  .then(something =>{
+    console.log('routes something', something)
+    res.json(something)
   })
 })
 
