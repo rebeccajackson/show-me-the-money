@@ -9,7 +9,6 @@ router.get('/', (req,res)=>{
   console.log('get all meetings')
   db.getMeetingHistory() //needs to output an array of meeting objects
   .then(meetings => {
-    console.log('routes array of meetings', meetings)
     res.json(meetings)
   })
 })
