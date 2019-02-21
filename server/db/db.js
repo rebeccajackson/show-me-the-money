@@ -51,9 +51,15 @@ function saveMeeting(meeting, testDb){
     startTime: meeting.startTime,
     endTime: meeting.endTime,
     duration: meeting.duration
-  }).then(newMeetingId => {
-    return db('meetings_users')
-    .insert({meeting_id: newMeetingId, user_id: meeting.attendees.id})
+  })
+  .then(newMeetingId => {
+    meeting.attendees.map(attendee => {
+      return db('users').insert({first_name: attendee.firstName, last_name: attendee.lastName, hourly_wage: attendee.hourlyWage})
+      .then(user => {
+        return db('meetings_users')
+        .insert({meeting_id: newMeetingId, user_id: user})
+      })
+    })
   })
 }
 
