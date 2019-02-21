@@ -14,11 +14,13 @@
     "h:migrate": "heroku run knex migrate:latest",
     "h:rollback": "heroku run knex migrate:rollback",
     "h:seed": "heroku run knex seed:run",
-    "knex": "knex"
+    "knex": "knex",
+    "win": "webpack --watch"
   },
   "author": "EDA",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "node-sass": "^4.11.0",
