@@ -21,6 +21,14 @@ export const receiveMeetings = meetings => {
     }
 }
 
+export const requestMeetings = meetings => {
+    return {
+        type: RECEIVE_MEETINGS,
+        meetings: meetings,
+        loading: false
+    }
+}
+
 export const receiveUsers = users => {
     return {
         type: RECEIVE_USERS,
@@ -29,7 +37,7 @@ export const receiveUsers = users => {
     }
 }
 
-export const saveMeeting = meeting => {
+export const sendMeeting = meeting => {
     return {
         type: SAVE_MEETING,
         meeting: meeting,
