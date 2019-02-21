@@ -23,7 +23,7 @@ export class DetailModal extends Component {
             <section className="modal-card-body">
               {this.props.meeting.meetings.map(detail => {
                 // Check MeetingHistory - need Object Keys: to compare id to id
-                if (detail.id == this.props.meetingId) {
+                if (detail.id == this.props.meetings.id) {
                   return (
                     <div>
                       <p>Name: {detail.title}</p>
