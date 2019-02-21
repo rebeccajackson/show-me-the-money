@@ -10,6 +10,8 @@ router.get('/', (req,res)=>{
   db.getAllUsers() //needs to output an array of users
   .then(users => {
     console.log('routes array of users', users)
-    res.json(meetings)
+    res.json(users)
   })
 })
+
+module.exports = router

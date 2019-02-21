@@ -10,13 +10,27 @@ module.exports = {
 function getMeetingHistory (testDb) {
   const db = testDb || connection
   return db('meetings')
-  .join('meetings-users', 'meetings-users.meeting_id', 'meeting')
-  
+  .join('meetings_users', 'meetings_users.meeting_id', 'meetings.id')
+  .join('users', 'users.id', 'meetings_users.user_id')
+  .select().orderBy('meetings.id', 'desc')
 }
 
-// function getMonthVeges(monthId, db = connection){
-//   return db('veg_months')
-//   .where('veg_months.month_id', monthId)
-//   .join('veg', 'veg.id', 'veg_months.veg_id')
-//   .select().orderBy('name')
-// }
+function getUsersByMeetingId(meetingId, testDb){
+  const db = testDb || connection
+  return db('meetings')
+  .join('meetings_users', 'meetings_users.meetings_id', 'meetings.id')
+  .where('meetings_users.meetings_id', meetingId)
+  .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage').orderBy('name')
+}
+
+function saveMeeting(testDb){
+  const db = testDb || connection
+  return db('meetings')
+  // .join('meetings_users')
+}
+
+function getAllUsers(testDb){
+  const db = testDb || connection
+  return db('users')
+  .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage')
+}
