@@ -24,10 +24,20 @@ function getUsersByMeetingId(meetingId, testDb){
   .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage').orderBy('lastName')
 }
 
-function saveMeeting(testDb){
+function saveMeeting(meeting, testDb){
   const db = testDb || connection
+  console.log('db save', meeting)
   return db('meetings')
-  .join('meetings_users')
+  .insert({
+    title: meeting.title, 
+    owner_id: meeting.owner_id,
+    startTime: meeting.startTime,
+    endTime: meeting.endTime,
+    duration: meeting.duration
+  }).then(newMeetingId => {
+    return db('meetings_users')
+    .insert({meeting_id: newMeetingId, user_id: meeting.attendees.id})
+  })
 }
 
 function getAllUsers(testDb){
