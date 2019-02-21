@@ -7,6 +7,7 @@ router.use(express.json())
 // GET /api/meetings
 router.get('/', (req,res)=>{
   console.log('get all meetings')
+  console.log(res)
   db.getMeetingHistory() //needs to output an array of meeting objects
   .then(meetings => {
     console.log('routes array of meetings', meetings)
