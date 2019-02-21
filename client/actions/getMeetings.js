@@ -4,6 +4,14 @@ import { getApiToken } from "../utils/auth";
 export const SHOW_ERROR = "SHOW_ERROR";
 export const REQUEST_MEETINGS = "REQUEST_MEETINGS";
 export const RECEIVE_MEETINGS = "RECEIVE_MEETINGS";
+export const SET_MEETING = "SET_MEETING";
+
+export const setMeetingData = meetingData => {
+  return {
+    type: SET_MEETING,
+    meetingData
+  };
+};
 
 export const loading = () => {
   return {
