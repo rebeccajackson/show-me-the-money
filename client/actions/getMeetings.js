@@ -20,12 +20,29 @@ export const receiveMeetings = meetings => {
   };
 };
 
-// export function getMeeting(meetingId) {
-//     return {
-//         type: GET_MEETINGS,
-//         payload: meetings
-//     }
-// }
+export const requestMeetings = meetings => {
+  return {
+    type: RECEIVE_MEETINGS,
+    meetings: meetings,
+    loading: false
+  }
+}
+
+export const receiveUsers = users => {
+  return {
+    type: RECEIVE_USERS,
+    users: users,
+    loading: false
+  }
+}
+
+export const sendMeeting = meeting => {
+  return {
+    type: SAVE_MEETING,
+    meeting: meeting,
+    loading: false
+  }
+}
 
 export const showError = errorMessage => {
   return {
