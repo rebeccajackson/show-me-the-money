@@ -14,7 +14,7 @@ router.get('/meetings', (req,res)=>{
 })
 
 router.post('/meetings', (req,res) => {
-  console.log('routes save meeting', req.body)
+  console.log('routes save meeting by name', req.body)
   db.saveMeeting(req.body)
   .then(newMeetingId =>{
     console.log('routes newMeetingId', newMeetingId)
