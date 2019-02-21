@@ -7,15 +7,18 @@ export class History extends Component {
     super(props);
     this.state = {
       data: "", // need chart data
-      meetingID: "", // get meeting by id: need function to get all meetings
+      meeting_id: "", // get meeting by id: need function to get all meetings
       displayGraph: true, // could toggle use Sparklines
-      meetings: ""
+      meetings: []
     };
   }
 
   // handleclick for link to show
   handleClick = e => {
     console.log(e);
+    this.setState({
+      meeting_id: e.target.name
+    });
   };
 
   render() {
@@ -36,7 +39,7 @@ export class History extends Component {
             <article className="tile is-child notification is-danger">
               <p className="title">put list of meetings here</p>
               {this.props.meetings.meetings.map(meeting => {
-                console.log(meeting);
+                console.log("map: ", meeting);
                 // add a handleclick event to link on data name
               })}
               <div className="content" />
@@ -54,7 +57,7 @@ export class History extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
+  console.log("meetings: ", state);
   return {
     meetings: state.meetings
   };
@@ -64,6 +67,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllMeetings: () => {
       dispatch(getAllMeetings());
+    },
+    getMeetings: id => {
+      dispatch(getMeeting(id));
     }
   };
 };
