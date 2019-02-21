@@ -3,7 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { getMeetingById } from '../actions/getMeetings'
 
-class PostMeeting extends React.Component {
+export class PostMeeting extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

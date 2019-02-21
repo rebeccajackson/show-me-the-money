@@ -37,7 +37,7 @@ export function App({auth}) {
       </div>
     </Router>
   )
-}
+} 
 
 const mapStateToProps = ({auth}) => {
   return {
