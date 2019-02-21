@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { getAllMeetings } from "../actions/getMeetings";
 
 export class History extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ export class History extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     meetings: state.meetings
   };
@@ -60,7 +62,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getMeetings: item => dispatch(getAllMeetings(item))
+    getAllMeetings: () => {
+      dispatch(getAllMeetings());
+    }
   };
 };
 
