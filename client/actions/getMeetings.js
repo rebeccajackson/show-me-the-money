@@ -58,7 +58,6 @@ export function getAllMeetings() {
     return request
       .get("api/meetings")
       .then(res => {
-        console.log(res);
         dispatch(receiveMeetings(res.body));
       })
       .catch(err => {
