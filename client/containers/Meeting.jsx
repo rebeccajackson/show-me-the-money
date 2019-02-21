@@ -14,7 +14,7 @@ class Meeting extends Component {
             meeting_owner: '',
             meeting_name: '',
             duration: 0,
-            total_wage: 0,
+            total_wages: 0,
             show_history: false,
             //temp var while waiting for NewMeeting container vvv
             total_wage_temp: 10000000,
@@ -26,6 +26,7 @@ class Meeting extends Component {
         this.meetingTimer = this.meetingTimer.bind(this)
         this.currentCost = this.currentCost.bind(this)
         this.endMeeting = this.endMeeting.bind(this)
+        this.totalWages = this.totalWages.bind(this)
         this.interval = setInterval(this.meetingTimer, 1000)
     }
 
@@ -37,7 +38,7 @@ class Meeting extends Component {
         this.setState({start_time: new Date().getTime()})
         // remove console logs after NewMeeting container finished 
         console.log(this.state.attendees)
-        console.log(this.state.total_wage)
+        console.log(this.state.total_wages)
     }
 
     msToTime() {
@@ -103,7 +104,17 @@ class Meeting extends Component {
        
     }
 
+    totalWages(attendees) {
+        var wageArr = attendees.map((attendee) => {
+            return attendee.hourlyWage
+        })
+        console.log(wageArr)
+
+    }
+
     render(){
+        var attendees = [{id:1, hourlyWage:10}, {id:2, hourlyWage:20}]
+        totalWages(attendees)
         return (
             <div>
                 <div>
@@ -135,6 +146,9 @@ function mapStateToProps (state) {
         attendees: state.attendees,
         meeting_owner: state.meeting_owner,
         meeting_name: state.meeting_name,
+        // total_wage: totalWages(state.attendees)
+        
+        
         // total_wage: 
         // temp_total_wage
     //     .map((attendee) => {
