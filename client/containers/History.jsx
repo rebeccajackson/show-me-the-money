@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllMeetings } from "../actions/getMeetings";
+import { getAllMeetings, setMeetingId } from "../actions/getMeetings";
 import MeetingHistory from "../components/MeetingHistory";
 import DetailModal from "../components/DetailModal";
 import {LineChart} from 'react-easy-chart'
@@ -18,12 +18,20 @@ export class History extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.setMeetingId = this.setMeetingId.bind(this);
   }
+
+  setMeetingId = id => {
+    console.log(id);
+    this.props.setMeetingId(id);
+  };
 
   // handleclick for link to show
   handleClick = event => {
+    this.setMeetingId(event.target.value);
+    // console.log("event :", event.target.value);
     this.setState({
-      meetingId: event.target.name, //should be id: currently title
+      meetingId: event.target.value,
       showModal: true
     });
   };
@@ -78,9 +86,10 @@ export class History extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ meetings, meetingId }) => {
   return {
-    meetings: state.meetings
+    meetings,
+    meetingId
   };
 };
 
@@ -91,6 +100,9 @@ const mapDispatchToProps = dispatch => {
     },
     getMeetings: id => {
       dispatch(getMeeting(id));
+    },
+    setMeetingId: id => {
+      dispatch(setMeetingId(id));
     }
   };
 };
