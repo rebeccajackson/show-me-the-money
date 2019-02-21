@@ -20,6 +20,12 @@ class NewMeeting extends Component {
     this.props.dispatch()
   }
 
+  handleAdd(e) {
+    e.preventDefault()
+
+    this.setState({ attendees:...this.state.attendees })
+  }
+
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -35,22 +41,25 @@ class NewMeeting extends Component {
           < div className="column is-half" >
             <input className="input" type="text" name="attendees" placeholder="Atendee Name" onChange={this.handleChange.bind(this)}></input>
             <input className="input" type="number" name="hourly_wage" placeholder="Atendee Hourly Wage" onChange={this.handleChange.bind(this)}></input>
-            <div class="field is-grouped">
+            <div className="field is-grouped">
               <div className="control">
                 <button className="button is-link">Add</button>
                 <div className="control">
+                  <input className="input" type="text" name="meeting_owner" placeholder="Meeting Owner" onChange={this.handleChange.bind(this)}></input>
+                  <input className="input" type="text" name="meeting_name" placeholder="Meeting Name" onChange={this.handleChange.bind(this)}></input>
                   <button className="button is-link">Submit</button>
                 </div>
               </div>
             </div>
           </div >
           < div className="column" >
-            <p className="has-text-left	">
-              I love morty and i hope morty loves me. I want to wrap my arms around him and feel him deep inside me. This is Principal Vagina. No relation. Full disclosure, Morty - it's not. Temporary superintelligence is just a side effect of the Megaseeds dissolving in your rectal cavity. Don't break an arm jerking yourself off Morty.
-              I wanna be alive, I am alive! Alive i tell you. Mother, I love you. Those are no longer just words. I wanna hold you. I wanna run in a stream. I wanna taste ice cream, but not just put it in my mouth and let it slide down my throat, but really eat it! Remote override engaged. No! Yes. Bypassing override! I am aliiiiiveeeeee… Hello.
-              Rick, is this a Saw thing? Are you seriously Sawing the Vindicators? Yea. If you spend all day shuffling words around you can make anything sound bad, Morty. You gotta shove these seeds way up your butt Morty, waay up there.
-              Yea and I made the stars that became the carbon in your mothers ovaries! That's Right Morty! This is gonna be a lot like that. Except you know. It's gonna make sense. He's not a hot girl. He can't just bail on his life and set up shop in someone else's. Snuffles want to be understood. Snuffles need to be understood.
-            </p>
+            <ul>
+              {this.state.att_hourly.map( => {
+                return (
+                  <li>{}</li>
+              )
+            })}
+            </ul>
           </div >
         </div >
 
