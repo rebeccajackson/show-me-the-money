@@ -109,6 +109,8 @@ class Meeting extends Component {
             return attendee.hourlyWage
         })
         console.log(wageArr)
+        return wageArr.reduce((acc, cur) => {return acc + cur})
+
 
     }
 
