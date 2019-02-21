@@ -6,10 +6,8 @@ router.use(express.json())
 
 // GET /api/meetings
 router.get('/', (req,res)=>{
-  console.log('get all meetings')
   db.getMeetingHistory() //needs to output an array of meeting objects
   .then(meetings => {
-    console.log('routes array of meetings', meetings)
     res.json(meetings)
   })
 })
@@ -31,6 +29,16 @@ router.get('/:id/users', (req,res)=>{
   db.getUsersByMeetingId(meetingId) //needs to output an array of users objects
   .then(users => {
     res.json(users)
+  })
+})
+
+// GET /api/meetings/:id
+router.get('/:id', (req,res)=>{
+  const meetingId = req.params.id
+  db.getMeetingById(meetingId) //needs to output an array of meeting objects
+  .then(meeting => {
+    console.log(meeting)
+    res.json(meeting)
   })
 })
 
