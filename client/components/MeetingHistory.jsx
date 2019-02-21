@@ -16,8 +16,8 @@ export class MeetingHistory extends Component {
                 <a
                   className="button is-fullwidth is-danger is-inverted is-outlined"
                   key={meeting.id}
-                  value={meeting.title}
-                  name={meeting.title}
+                  value={meeting.name}
+                  name={meeting.name}
                   onClick={event => {
                     this.props.handleClick(event);
                   }}
