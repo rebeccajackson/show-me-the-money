@@ -10,7 +10,7 @@ export function registerUserRequest (creds) {
       .then(res => {
         const userInfo = saveUserToken(res.body.token)
         dispatch(receiveLogin(userInfo))
-        document.location = "/#/"
+        document.location = "/#/newmeeting"
       })
       .catch(err => dispatch(loginError(err.response.body.message)))
   }
