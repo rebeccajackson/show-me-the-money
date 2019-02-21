@@ -4,7 +4,8 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.get('/users', (req,res)=>{
+// GET /api/meetings
+router.get('/', (req,res)=>{
   console.log('get all users')
   db.getAllUsers() //needs to output an array of users
   .then(users => {
