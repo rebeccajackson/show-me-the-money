@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {registerUserRequest} from '../actions/register'
 import {loginError} from '../actions/login'
+import { HashRouter as Router, Route, Link } from 'react-router-dom'
+import NewMeeting from '../containers/NewMeeting'
 
 class Register extends React.Component {
   constructor(props) {
@@ -29,6 +31,9 @@ class Register extends React.Component {
     if (confirm_password != password) return this.props.dispatch(loginError("Passwords don't match"))
     this.props.dispatch(registerUserRequest(this.state))
   }
+
+
+
   render() {
     const {auth} = this.props
     return (
