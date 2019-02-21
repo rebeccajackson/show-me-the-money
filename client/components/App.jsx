@@ -8,6 +8,7 @@ import Nav from './Nav'
 import Meeting from '../containers/Meeting'
 import NewMeeting from '../containers/NewMeeting'
 import History from './History'
+import PostMeeting from './PostMeeting';
 
 export function App({ auth }) {
   return (
@@ -30,8 +31,9 @@ export function App({ auth }) {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/newmeeting" component={NewMeeting} />
-          <Route path="/meeting" component={Meeting} />
+          <Route exact path="/meeting" component={Meeting} />
           <Route path="/history" component={History} />
+          <Route path="/meeting/:meetingId" component={PostMeeting} />
         </div>
 
       </div>

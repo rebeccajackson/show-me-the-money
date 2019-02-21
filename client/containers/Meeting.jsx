@@ -11,11 +11,17 @@ class Meeting extends Component {
             meeting_owner: '',
             meeting_name: '',
             duration: 0,
-            show_history: false
+            total_wage: 0,
+            show_history: false,
+            //temp var while waiting for NewMeeting container vvv
+            total_wage_temp: 10000000
 
         }
+
         this.msToTime = this.msToTime.bind(this)
         this.meetingTimer = this.meetingTimer.bind(this)
+        this.currentCost = this.currentCost.bind(this)
+        this.endMeeting = this.endMeeting.bind(this)
         this.interval = setInterval(this.meetingTimer, 1000)
     }
 
@@ -25,6 +31,9 @@ class Meeting extends Component {
 
     componentDidMount() {
         this.setState({start_time: new Date().getTime()})
+        // remove console logs after NewMeeting container finished 
+        console.log(this.state.attendees)
+        console.log(this.state.total_wage)
     }
 
     msToTime() {
@@ -41,6 +50,15 @@ class Meeting extends Component {
         return (hours + ":" + minutes + ":" + seconds)
     }
 
+    currentCost() {
+        // rename vars when NewMeeting container is finished
+        return(((this.state.total_wage_temp/3600000)*this.state.duration).toFixed(2))
+
+    }
+
+    endMeeting() {
+        clearInterval(this.interval);
+    }
 
     meetingTimer() {
         var currentTime = new Date().getTime()
@@ -57,6 +75,16 @@ class Meeting extends Component {
                 <br />
                 <div>
                     $ Meeting Cost $
+                    <h1>${this.currentCost()}</h1>
+                </div>
+                <br />
+                <div>
+                    <button
+                    className="button is-large"
+                    onClick={() => this.endMeeting()}>
+
+                        End Meeting
+                    </button>
                 </div>
             </div>
         )
@@ -65,10 +93,17 @@ class Meeting extends Component {
 
 // state referrs to the global store
 function mapStateToProps (state) {
+
     return {
         attendees: state.attendees,
         meeting_owner: state.meeting_owner,
         meeting_name: state.meeting_name,
+        // total_wage: 
+        // temp_total_wage
+    //     .map((attendee) => {
+    //         attendee.hourlyWage
+    //     })
+    //     .reduce((acc, cur) => {return acc + cur})
     }
 }
 
