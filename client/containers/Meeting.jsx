@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { saveMeeting } from '../actions/getMeetings'
+import { bindActionCreators } from 'redux';
+
 class Meeting extends Component {
     constructor(props){
         super(props)
@@ -14,7 +17,8 @@ class Meeting extends Component {
             total_wage: 0,
             show_history: false,
             //temp var while waiting for NewMeeting container vvv
-            total_wage_temp: 10000000
+            total_wage_temp: 10000000,
+            meeting_in_progress: true
 
         }
 
@@ -57,13 +61,46 @@ class Meeting extends Component {
     }
 
     endMeeting() {
-        clearInterval(this.interval);
+        if(this.state.meeting_in_progress){
+            clearInterval(this.interval);
+            // var end_time = (new Date().getTime())
+            // this.setState({end_time: end_time})
+            
+            // var duration = (end_time - this.state.start_time)
+            // this.setState({duration: duration})
+            
+            this.setState({end_time: (new Date().getTime())})
+            // this.setState({duration: (this.state.end_time - this.state.start_time)})
+            
+            var finishedMeeting = {
+                title: this.state.meeting_name,
+                owner_id: this.state.owner_id,
+                start_time: this.state.start_time,
+                // end_time: end_time,
+                end_time: this.state.end_time,
+                // duration: duration,
+                duration: this.state.duration
+                
+            }
+
+            // this.state.currentCost
+        
+            this.props.saveMeeting(finishedMeeting)
+
+            this.setState({meeting_in_progress: false})
+        }
+
+        
+
     }
 
     meetingTimer() {
-        var currentTime = new Date().getTime()
-        var duration = (Math.round((currentTime - this.state.start_time)/1000))*1000
-        this.setState({duration})
+        if(this.state.meeting_in_progress){
+            var currentTime = new Date().getTime()
+            var duration = (Math.round((currentTime - this.state.start_time)/1000))*1000
+            this.setState({duration}) 
+        }
+       
     }
 
     render(){
@@ -107,4 +144,8 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps)(Meeting)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({saveMeeting: saveMeeting}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Meeting)
