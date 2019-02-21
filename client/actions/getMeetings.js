@@ -20,12 +20,12 @@ export const receiveMeetings = meetings => {
   };
 };
 
-export function getMeeting(meetingId) {
-  return {
-    type: GET_MEETINGS,
-    payload: meetings
-  };
-}
+// export function getMeeting(meetingId) {
+//     return {
+//         type: GET_MEETINGS,
+//         payload: meetings
+//     }
+// }
 
 export const showError = errorMessage => {
   return {
@@ -36,13 +36,12 @@ export const showError = errorMessage => {
 };
 
 export function getAllMeetings() {
-  const token = getApiToken();
   return dispatch => {
     dispatch(loading());
     return request
-      .get("api/v1/meetings")
-      .set("Authorization", "Bearer " + token)
+      .get("api/meetings")
       .then(res => {
+        console.log(res);
         dispatch(receiveMeetings(res.body));
       })
       .catch(err => {
@@ -53,17 +52,32 @@ export function getAllMeetings() {
 
 export function getMeetings(meetingId) {
   return dispatch => {
+    console.log("hey");
     dispatch(loading());
     return request
-      .get(`api/v1/meetings/${meetingId}`)
-      .set("Authorization", "Bearer " + token)
+      .get(`api/meetings/${meetingId}`)
       .then(res => {
         console.log(res.body);
-        if (res.body.length == 1) {
+        if (!res.body.length == 1) {
           dispatch(showError("nothing g"));
         } else {
           dispatch(receiveMeetings(res.body));
         }
+      })
+      .catch(err => {
+        dispatch(showError(err.message));
+      });
+  };
+}
+
+export function saveMeeting(meeting) {
+  console.log(meeting);
+  return dispatch => {
+    dispatch(loading());
+    return request
+      .post(`/api/v1/meetings/save`, meeting)
+      .then(res => {
+        dispatch(receiveMeetings(res.body));
       })
       .catch(err => {
         dispatch(showError(err.message));
