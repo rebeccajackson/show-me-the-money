@@ -5,6 +5,7 @@ export class MeetingHistory extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <div>
@@ -12,19 +13,21 @@ export class MeetingHistory extends Component {
           <article className="tile is-child notification is-danger">
             <p className="title">Meeting History</p>
             {this.props.meetings.meetings.map(meeting => {
+              console.log("History", typeof meeting.id);
+
               return (
-                <a
+                <button
                   className="button is-fullwidth is-danger is-inverted is-outlined"
                   key={meeting.id}
-                  value={meeting.name}
-                  name={meeting.name}
+                  value={meeting.id}
+                  name={meeting.title}
                   onClick={event => {
                     this.props.handleClick(event);
                   }}
                 >
                   {meeting.title}
                   {/* {meeting.startTime} TODO: ADD DATE - is this startTime? */}
-                </a>
+                </button>
               );
             })}
           </article>
