@@ -16,6 +16,13 @@ export const createMeeting = (newMeeting) => {
     }
 }
 
+export const loading = () => {
+    return {
+        type: REQUEST_MEETINGS,
+        loading: true
+    };
+};
+
 export const setMeetingId = meetingId => {
     return {
         type: SET_MEETING,
@@ -28,8 +35,8 @@ export const receiveMeetings = meetings => {
         type: RECEIVE_MEETINGS,
         meetings: meetings,
         loading: false
-    }
-}
+    };
+};
 
 export const requestMeeting = meeting => {
     return {
@@ -44,16 +51,16 @@ export const receiveUsers = users => {
         type: RECEIVE_USERS,
         users: users,
         loading: false
-    }
-}
+    };
+};
 
 export const sendMeeting = meeting => {
     return {
         type: SAVE_MEETING,
         meeting: meeting,
         loading: false
-    }
-}
+    };
+};
 
 export const showError = (errorMessage) => {
     return {
@@ -110,17 +117,17 @@ export function getUsersByMeeting(meetingId) {
     }
 }
 
-
 export function saveMeeting(meeting) {
+    console.log(meeting);
     return dispatch => {
         dispatch(loading());
         return request
             .post(`/api/meetings`, meeting)
             .then(res => {
-                dispatch(getAllMeetings())
+                dispatch(getAllMeetings());
             })
             .catch(err => {
-                dispatch(showError(err.message))
-            })
+                dispatch(showError(err.message));
+            });
     };
 }

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getAllMeetings, setMeetingId } from "../actions/getMeetings";
 import MeetingHistory from "../components/MeetingHistory";
 import DetailModal from "../components/DetailModal";
-import {LineChart} from 'react-easy-chart'
+import { LineChart } from "react-easy-chart";
 
 export class History extends Component {
   constructor(props) {
@@ -22,7 +22,6 @@ export class History extends Component {
   }
 
   setMeetingId = id => {
-    console.log(id);
     this.props.setMeetingId(id);
   };
 
@@ -41,19 +40,21 @@ export class History extends Component {
 
   // display meetings with state
   componentDidMount() {
-        this.props.getAllMeetings()
+    this.props.getAllMeetings();
   }
 
-  componentDidUpdate(){
-    if(this.state.loading && this.props.meetings.meetings.length > 0) this.setState({meetings: this.props.meetings.meetings, loading: false})
-
+  componentDidUpdate() {
+    if (this.state.loading && this.props.meetings.meetings.length > 0)
+      this.setState({ meetings: this.props.meetings.meetings, loading: false });
   }
 
   render() {
-    let costOverTime = [[]]
-    this.state.meetings.map(meeting => costOverTime[0].push({ x:meeting.id, y:meeting.cost}))
-    costOverTime[0] = costOverTime[0].reverse()
-    console.log(costOverTime)
+    let costOverTime = [[]];
+    this.state.meetings.map(meeting =>
+      costOverTime[0].push({ x: meeting.id, y: meeting.cost })
+    );
+    costOverTime[0] = costOverTime[0].reverse();
+    console.log(costOverTime);
     return (
       <div className="history-page">
         <section className="hero is-dark">
@@ -76,7 +77,16 @@ export class History extends Component {
           />
           <div className="column is-half">
             <article className="tile is-child notification ">
-              {!this.state.loading && <LineChart grid axes xType={'text'} width={500} height={600} data={costOverTime}/>}
+              {!this.state.loading && (
+                <LineChart
+                  grid
+                  axes
+                  xType={"text"}
+                  width={500}
+                  height={600}
+                  data={costOverTime}
+                />
+              )}
             </article>
           </div>
         </div>
@@ -98,7 +108,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(getAllMeetings());
     },
     getMeetings: id => {
-      dispatch(getMeeting(id));
+      dispatch(getMeetingById(id));
     },
     setMeetingId: id => {
       dispatch(setMeetingId(id));

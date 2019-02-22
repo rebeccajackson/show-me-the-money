@@ -31,7 +31,7 @@ function meetings(state = initialState, action) {
       return {
         meeting: action.meeting,
         loading: action.loading
-      }
+      };
     case SHOW_ERROR:
       return {
         ...state,
@@ -45,8 +45,9 @@ function meetings(state = initialState, action) {
       };
     case CREATE_MEETING:
       return {
-        ...state, newMeeting: action.newMeeting
-      }
+        ...state,
+        newMeeting: action.newMeeting
+      };
     case SET_MEETING:
       return {
         ...state,
