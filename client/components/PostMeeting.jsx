@@ -13,7 +13,7 @@ export class PostMeeting extends React.Component {
 
   componentDidMount(){
     const { dispatch } = this.props
-    dispatch(getMeetingById(1))
+    dispatch(getMeetingById(this.props.match.params.meetingId))
   }
     
 
