@@ -1,9 +1,19 @@
 import request from "superagent";
 import { getApiToken } from "../utils/auth";
+import NewMeeting from "../containers/NewMeeting";
 
 export const SHOW_ERROR = "SHOW_ERROR";
 export const REQUEST_MEETINGS = "REQUEST_MEETINGS";
 export const RECEIVE_MEETINGS = "RECEIVE_MEETINGS";
+export const CREATE_MEETING = "CREATE_MEETING";
+
+
+export const createMeeting = (newMeeting) => {
+  return {
+    type: CREATE_MEETING,
+    newMeeting: newMeeting
+  }
+}
 
 export const loading = () => {
   return {

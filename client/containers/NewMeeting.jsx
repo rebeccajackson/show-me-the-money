@@ -1,29 +1,54 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { createMeeting } from '../actions/getMeetings'
 
 class NewMeeting extends Component {
   constructor(props) {
     super(props)
     this.state = {
       attendees: [],
+      first_name: '',
+      last_name: '',
       hourly_wage: '',
       meeting_owner: '',
       meeting_name: '',
       show_history: false
     }
+    // bound this to handleAdd()
+    this.handleAdd = this.handleAdd.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({meeting_owner: this.props.meeting_owner})
   }
 
   handleSubmit(e) {
     e.preventDefault()
-
-    this.props.dispatch()
+    this.props.createMeeting(this.state)
+    this.props.history.push('/meeting')
   }
 
-  handleAdd(e) {
-    e.preventDefault()
+  handleAdd() {
+    var newAttendee = {
+      firstName: this.state.first_name,
+      lastName: this.state.last_name,
+      hourlyWage: this.state.hourly_wage
+    }
+    
+    let curAttendees = this.state.attendees
+    curAttendees.push(newAttendee)
+    this.setState({ attendees: curAttendees })
 
-    this.setState({ attendees:...this.state.attendees })
+    this.setState({
+      first_name: '',
+      last_name: '',
+      hourly_wage: ''
+  })
+
+
   }
 
   handleChange(e) {
@@ -33,30 +58,32 @@ class NewMeeting extends Component {
   }
 
   render() {
-    console.log(this.state.attendees)
-    console.log(this.state.hourly_wage)
     return (
       <React.Fragment>
         < div className="columns" >
           < div className="column is-half" >
-            <input className="input" type="text" name="attendees" placeholder="Atendee Name" onChange={this.handleChange.bind(this)}></input>
-            <input className="input" type="number" name="hourly_wage" placeholder="Atendee Hourly Wage" onChange={this.handleChange.bind(this)}></input>
+            <h2>Add Meeting Attendees Below</h2>
+            <input className="input" type="text" name="first_name" placeholder="First Name" value={this.state.first_name} onChange={(e) => this.handleChange(e)}></input>
+            <input className="input" type="text" name="last_name" placeholder="Last Name" value={this.state.last_name} onChange={(e) => this.handleChange(e)}></input>
+            <input className="input" type="number" name="hourly_wage" placeholder="Attendee Hourly Wage" value={this.state.hourly_wage} onChange={(e) => this.handleChange(e)}></input>
             <div className="field is-grouped">
               <div className="control">
-                <button className="button is-link">Add</button>
+                <button className="button is-link" onClick={() => this.handleAdd()}>Add</button>
                 <div className="control">
-                  <input className="input" type="text" name="meeting_owner" placeholder="Meeting Owner" onChange={this.handleChange.bind(this)}></input>
-                  <input className="input" type="text" name="meeting_name" placeholder="Meeting Name" onChange={this.handleChange.bind(this)}></input>
-                  <button className="button is-link">Submit</button>
+                  <form>
+                    <input className="input" type="text" name="meeting_name" placeholder="Meeting Name" onChange={(e) => this.handleChange(e)} required></input>
+                    <button className="button is-link" type="submit" onClick={this.handleSubmit}>Submit</button>
+                  </form>
+                  
                 </div>
               </div>
             </div>
           </div >
           < div className="column" >
             <ul>
-              {this.state.att_hourly.map( => {
+              {this.state.attendees.map((attendee) => {
                 return (
-                  <li>{}</li>
+                  <li>{attendee.firstName} {attendee.lastName}</li>
               )
             })}
             </ul>
@@ -69,8 +96,14 @@ class NewMeeting extends Component {
 }
 
 function MapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({ createMeeting }, dispatch)
 }
 
-export default connect(null, MapDispatchToProps)(NewMeeting)
+function mapStateToProps(state) {
+  return {
+    meeting_owner: state.auth.user.user_name
+  }
+}
+
+export default connect(mapStateToProps, MapDispatchToProps)(NewMeeting)
 

@@ -14,11 +14,9 @@ class Meeting extends Component {
             meeting_owner: '',
             meeting_name: '',
             duration: 0,
-            total_wages: 0,
+            total_wage: 0,
             show_history: false,
-            //temp var while waiting for NewMeeting container vvv
-            total_wage_temp: 10000000,
-            meeting_in_progress: true
+            meeting_in_progress: false
 
         }
 
@@ -26,7 +24,7 @@ class Meeting extends Component {
         this.meetingTimer = this.meetingTimer.bind(this)
         this.currentCost = this.currentCost.bind(this)
         this.endMeeting = this.endMeeting.bind(this)
-        this.totalWages = this.totalWages.bind(this)
+        this.totalWage = this.totalWage.bind(this)
         this.interval = setInterval(this.meetingTimer, 1000)
     }
 
@@ -35,10 +33,12 @@ class Meeting extends Component {
     }
 
     componentDidMount() {
-        this.setState({start_time: new Date().getTime()})
-        // remove console logs after NewMeeting container finished 
-        console.log(this.state.attendees)
-        console.log(this.state.total_wages)
+        if(typeof this.props.attendees == 'object'){
+            this.setState({meeting_in_progress: true})
+            this.setState({start_time: new Date().getTime()})
+            var total_wage = this.totalWage(this.props.attendees)
+            this.setState({total_wage: total_wage})
+        }
     }
 
     msToTime() {
@@ -56,35 +56,24 @@ class Meeting extends Component {
     }
 
     currentCost() {
-        // rename vars when NewMeeting container is finished
-        return(((this.state.total_wage_temp/3600000)*this.state.duration).toFixed(2))
-
+        return(((this.state.total_wage/3600000)*this.state.duration).toFixed(2))
     }
 
     endMeeting() {
         if(this.state.meeting_in_progress){
             clearInterval(this.interval);
-            // var end_time = (new Date().getTime())
-            // this.setState({end_time: end_time})
-            
-            // var duration = (end_time - this.state.start_time)
-            // this.setState({duration: duration})
             
             this.setState({end_time: (new Date().getTime())})
-            // this.setState({duration: (this.state.end_time - this.state.start_time)})
             
             var finishedMeeting = {
                 title: this.state.meeting_name,
                 owner_id: this.state.owner_id,
                 start_time: this.state.start_time,
-                // end_time: end_time,
                 end_time: this.state.end_time,
-                // duration: duration,
-                duration: this.state.duration
+                duration: this.state.duration,
+                total_cost: this.currentCost()
                 
             }
-
-            // this.state.currentCost
         
             this.props.saveMeeting(finishedMeeting)
 
@@ -104,19 +93,18 @@ class Meeting extends Component {
        
     }
 
-    totalWages(attendees) {
+    totalWage(attendees) {
         var wageArr = attendees.map((attendee) => {
             return attendee.hourlyWage
         })
-        console.log(wageArr)
-        return wageArr.reduce((acc, cur) => {return acc + cur})
+        return wageArr.reduce((acc, cur) => {return Number(acc) + Number(cur)})
 
 
     }
 
     render(){
         var attendees = [{id:1, hourlyWage:10}, {id:2, hourlyWage:20}]
-        totalWages(attendees)
+        this.totalWage(attendees)
         return (
             <div>
                 <div>
@@ -132,7 +120,6 @@ class Meeting extends Component {
                     <button
                     className="button is-large"
                     onClick={() => this.endMeeting()}>
-
                         End Meeting
                     </button>
                 </div>
@@ -143,21 +130,16 @@ class Meeting extends Component {
 
 // state referrs to the global store
 function mapStateToProps (state) {
-
-    return {
-        attendees: state.attendees,
-        meeting_owner: state.meeting_owner,
-        meeting_name: state.meeting_name,
-        // total_wage: totalWages(state.attendees)
-        
-        
-        // total_wage: 
-        // temp_total_wage
-    //     .map((attendee) => {
-    //         attendee.hourlyWage
-    //     })
-    //     .reduce((acc, cur) => {return acc + cur})
+    if(typeof state.meetings.newMeeting == 'object'){
+        return {
+            attendees: state.meetings.newMeeting.attendees,
+            meeting_owner: state.meeting_owner,
+            meeting_name: state.meeting_name,
+        } 
+    } else {
+        return {}
     }
+
 }
 
 function mapDispatchToProps(dispatch) {
