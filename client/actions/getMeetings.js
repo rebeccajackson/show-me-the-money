@@ -72,7 +72,6 @@ export const showError = (errorMessage) => {
 
 export function getAllMeetings() {
     return dispatch => {
-        dispatch(loading())
         return request
             .get('api/meetings')
             .then(res => {
