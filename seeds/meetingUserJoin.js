@@ -20,7 +20,9 @@ exports.seed = function(knex, Promise) {
         {meeting_id: 3, user_id: 9},
         {meeting_id: 3, user_id: 10},
         {meeting_id: 3, user_id: 11},
-        {meeting_id: 3, user_id: 12}
+        {meeting_id: 3, user_id: 12},
+
+        {meeting_id: 4, user_id: 1}
       ]);
     });
 };
