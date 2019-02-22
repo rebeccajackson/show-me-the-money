@@ -25,16 +25,18 @@ export class PostMeeting extends React.Component {
       <h3>Duration: {this.props.meeting.duration}</h3>
       <h3>Total Cost: {this.props.meeting.cost}</h3>
       <br/>
-      {/* <table className={'table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered'}>
+      <table className={'table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered'}>
         <tbody>
-          <tr>Attendees:</tr>
-          {this.props.meeting.attendees.map((attendee, i) => {
-            <tr>
-              <td key={i}>{attendee.first_name}</td>
-            </tr>
+          <tr><td>Attendees:</td></tr>
+
+          {this.props.meeting.attendees.map((person, i) => {
+            console.log(person.first_name);
+            return (<tr>
+              <td key={i}>{i+1}-{person.first_name}</td>
+            </tr>)
           })}
         </tbody>
-      </table> */}
+      </table>
     </div>}</React.Fragment>
   }
 }

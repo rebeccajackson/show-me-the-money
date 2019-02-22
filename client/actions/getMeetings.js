@@ -3,7 +3,7 @@ import { getApiToken } from "../utils/auth";
 import newMeeting from "../containers/NewMeeting";
 
 export const SHOW_ERROR = "SHOW_ERROR";
-export const REQUEST_MEETINGS = "REQUEST_MEETINGS";
+export const REQUEST_MEETING = "REQUEST_MEETINGS";
 export const RECEIVE_MEETINGS = "RECEIVE_MEETINGS";
 export const CREATE_MEETING = "CREATE_MEETING";
 export const SET_MEETING = "SET_MEETING";
@@ -23,13 +23,6 @@ export const setMeetingId = meetingId => {
     };
 };
 
-export const loading = () => {
-    return {
-        type: REQUEST_MEETINGS,
-        loading: true
-    }
-}
-
 export const receiveMeetings = meetings => {
     return {
         type: RECEIVE_MEETINGS,
@@ -39,10 +32,6 @@ export const receiveMeetings = meetings => {
 }
 
 export const requestMeeting = meeting => {
-<<<<<<< HEAD
-=======
-    console.log(meeting);
->>>>>>> 454fef621c9f108fed52cafd8a8242d5056200d1
     return {
         type: REQUEST_MEETING,
         meeting: meeting,
@@ -90,7 +79,7 @@ export function getAllMeetings() {
 
 export function getMeetingById(meetingId) {
     return dispatch => {
-        dispatch(loading())
+        // dispatch(loading())
         return request
             .get(`api/meetings/${meetingId}`)
             .then(res => {
