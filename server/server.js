@@ -1,10 +1,14 @@
 const path = require('path')
 const express = require('express')
+const favicon = require('serve-favicon');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const passport = require('passport')
 
 const server = express()
+
+server.use(favicon(path.join(__dirname, '..', 'public','images', 'favicon.ico')))
+
 
 server.use(cors('*'))
 
