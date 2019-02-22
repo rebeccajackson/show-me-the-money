@@ -123,9 +123,9 @@ export function saveMeeting(meeting) {
     return dispatch => {
         dispatch(loading());
         return request
-            .post(`/api/v1/meetings/save`, meeting)
+            .post(`/api/meetings`, meeting)
             .then(res => {
-                dispatch(receiveMeetings(res.body))
+                dispatch(getAllMeetings())
             })
             .catch(err => {
                 dispatch(showError(err.message))
