@@ -43,10 +43,6 @@ export class DetailModal extends Component {
   }
 
   render() {
-    // {this.state.meetingdata = this.props.meeting.meetings.map(detail => {
-    //   if (detail.id == this.props.meetings.meetingId) {
-    //     return
-    //   }
     if (this.props.isShowing) {
       return (
         <div className="modal is-active">
@@ -67,10 +63,7 @@ export class DetailModal extends Component {
                     <div>
                       <img src="/dollar.svg" width="45px" />
                       <p>Name: {detail.title}</p>
-                      <p>
-                        Duration (ms): {this.msToTime(detail.duration)}
-                        {/* {() => this.msToTime.bind(this, detail.duration)} */}
-                      </p>
+                      <p>Duration H-M-S: {this.msToTime(detail.duration)}</p>
                       <p>Cost: ${detail.cost}</p>
                       <br />
                       {this.state.renderAttendees && (
