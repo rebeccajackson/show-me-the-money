@@ -29,7 +29,6 @@ export class History extends Component {
   // handleclick for link to show
   handleClick = event => {
     this.setMeetingId(event.target.value);
-    // console.log("event :", event.target.value);
     this.setState({
       meetingId: event.target.value,
       showModal: true
