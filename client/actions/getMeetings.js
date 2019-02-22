@@ -6,10 +6,10 @@ export const REQUEST_MEETINGS = "REQUEST_MEETINGS";
 export const RECEIVE_MEETINGS = "RECEIVE_MEETINGS";
 export const SET_MEETING = "SET_MEETING";
 
-export const setMeetingData = meetingData => {
+export const setMeetingId = meetingId => {
   return {
     type: SET_MEETING,
-    meetingData
+    meetingId
   };
 };
 
@@ -66,7 +66,6 @@ export function getAllMeetings() {
     return request
       .get("api/meetings")
       .then(res => {
-        console.log(res);
         dispatch(receiveMeetings(res.body));
       })
       .catch(err => {

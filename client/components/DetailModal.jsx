@@ -1,12 +1,46 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { getMeeting } from "../actions/getMeetings";
+import AttendeeList from "../components/AttendeeList";
+import { getMeeting } from "../actions/getMeetings";
 
 export class DetailModal extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      meetingId: null,
+      showAttendees: false
+    };
+    this.renderAttendees = this.renderAttendees.bind(this);
   }
+
+  componentDidMount() {
+    this.setState({
+      meetingId: this.props.meetings.meetingId
+    });
+  }
+
+  renderAttendees(id) {
+    this.setState(prevState => ({
+      showAttendees: !prevState.showAttendees
+    }));
+    this.props.getMeeting(id);
+  }
+
+  msToTime(duration) {
+    var milliseconds = parseInt((duration % 1000) / 100),
+      seconds = parseInt((duration / 1000) % 60),
+      minutes = parseInt((duration / (1000 * 60)) % 60),
+      hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds;
+  }
+
   render() {
+    // could map here and the return below!
     if (this.props.isShowing) {
       return (
         <div className="modal is-active">
@@ -22,14 +56,28 @@ export class DetailModal extends Component {
             </header>
             <section className="modal-card-body">
               {this.props.meeting.meetings.map(detail => {
-                // Check MeetingHistory - need Object Keys: to compare id to id
-                if (detail.id == this.props.meetings.id) {
+                if (detail.id == this.props.meetings.meetingId) {
                   return (
                     <div>
+                      <img src="/dollar.svg" width="45px" />
                       <p>Name: {detail.title}</p>
-                      <p>Duration: {detail.duration}</p>
-                      <p>Cost: {detail.cost}</p>
-                      <p>Attendees: {detail.attendees}</p>
+                      <p>
+                        Duration:{detail.duration}
+                        {/* {() => this.msToTime.bind(this, detail.duration)} */}
+                      </p>
+                      <p>Cost: ${detail.cost}</p>
+                      <br />
+                      {this.state.renderAttendees && (
+                        <AttendeeList id={this.props.meetingId} />
+                      )}
+                      <a
+                        className="button is-primary is-outlined is-rounded"
+                        onClick={() =>
+                          this.renderAttendees(this.props.meetingId)
+                        }
+                      >
+                        Show Attendees!
+                      </a>
                     </div>
                   );
                 }
@@ -49,9 +97,10 @@ export class DetailModal extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ meetings, meetingId }) => {
   return {
-    meetings: state.meetings
+    meetings,
+    meetingId
   };
 };
 
