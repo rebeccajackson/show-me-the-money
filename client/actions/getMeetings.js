@@ -1,6 +1,6 @@
 import request from "superagent";
 import { getApiToken } from "../utils/auth";
-import createMeeting from "../containers/NewMeeting";
+import newMeeting from "../containers/NewMeeting";
 
 export const SHOW_ERROR = "SHOW_ERROR";
 export const REQUEST_MEETINGS = "REQUEST_MEETINGS";
