@@ -1,38 +1,43 @@
-// WE NEED TO IMPORT THE VARIABLES FROM ACTIONS AND CHANGE HERE
-// import {
-//   RECEIVE_MEETINS,
-//   REQUEST_MEETINGS,
-//   SHOW_ERROR,
-//   SAVE_MEETING
-// } from "../actions";
+import {
+  RECEIVE_MEETINGS,
+  REQUEST_MEETINGS,
+  SHOW_ERROR,
+  SAVE_MEETING,
+  SET_MEETING
+} from "../actions/getMeetings.js";
 
-const intialState = {
+const initialState = {
   meetings: [],
   loading: false
 };
 
-function meetings(state = intialState, action) {
+function meetings(state = initialState, action) {
   switch (action.type) {
-    case "RECIEVE_MEETINGS":
+    case RECEIVE_MEETINGS:
       return {
         meetings: action.meetings,
         loading: action.loading
       };
-    case "REQUEST_MEETINGS":
+    case REQUEST_MEETINGS:
       return {
         ...state,
         loading: action.loading
       };
-    case "SHOW_ERROR":
+    case SHOW_ERROR:
       return {
         ...state,
         loading: action.loading,
         errorMessage: action.errorMessage
       };
-    case "SAVE_MEETING":
+    case SAVE_MEETING:
       return {
         ...state,
         loading: action.loading
+      };
+    case SET_MEETING:
+      return {
+        ...state,
+        meetingId: action.meetingId
       };
     default:
       return state;
