@@ -14,6 +14,14 @@ export const createMeeting = (newMeeting) => {
     newMeeting: newMeeting
   }
 }
+export const SET_MEETING = "SET_MEETING";
+
+export const setMeetingId = meetingId => {
+  return {
+    type: SET_MEETING,
+    meetingId
+  };
+};
 
 export const loading = () => {
   return {
@@ -68,7 +76,6 @@ export function getAllMeetings() {
     return request
       .get("api/meetings")
       .then(res => {
-        console.log(res);
         dispatch(receiveMeetings(res.body));
       })
       .catch(err => {

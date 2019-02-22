@@ -3,15 +3,16 @@ import {
   REQUEST_MEETINGS,
   SHOW_ERROR,
   SAVE_MEETING,
-  CREATE_MEETING
+  CREATE_MEETING,
+  SET_MEETING
 } from "../actions/getMeetings.js";
 
-const intialState = {
+const initialState = {
   meetings: [],
   loading: false
 };
 
-function meetings(state = intialState, action) {
+function meetings(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_MEETINGS:
       return {
@@ -38,6 +39,11 @@ function meetings(state = intialState, action) {
       return {
         ...state, newMeeting: action.newMeeting
       }
+    case SET_MEETING:
+      return {
+        ...state,
+        meetingId: action.meetingId
+      };
     default:
       return state;
   }
