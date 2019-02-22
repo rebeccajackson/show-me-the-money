@@ -120,15 +120,16 @@ export function getUsersByMeeting(meetingId) {
 
 
 export function saveMeeting(meeting) {
+    console.log(meeting);
     return dispatch => {
         dispatch(loading());
         return request
             .post(`/api/meetings`, meeting)
             .then(res => {
-                dispatch(getAllMeetings())
+                dispatch(getAllMeetings());
             })
             .catch(err => {
-                dispatch(showError(err.message))
-            })
+                dispatch(showError(err.message));
+            });
     };
 }
