@@ -5,6 +5,8 @@ import {
   REQUEST_MEETINGS,
   SHOW_ERROR,
   SAVE_MEETING,
+  CREATE_MEETING,
+  SET_MEETING,
   REQUEST_MEETING
 } from "../actions/getMeetings.js";
 
@@ -25,11 +27,11 @@ function meetings(state = initialState, action) {
         ...state,
         loading: action.loading
       };
-      case REQUEST_MEETING :
+    case REQUEST_MEETING:
       return {
         meeting: action.meeting,
         loading: action.loading
-    }
+      }
     case SHOW_ERROR:
       return {
         ...state,
@@ -40,6 +42,15 @@ function meetings(state = initialState, action) {
       return {
         ...state,
         loading: action.loading
+      };
+    case CREATE_MEETING:
+      return {
+        ...state, newMeeting: action.newMeeting
+      }
+    case SET_MEETING:
+      return {
+        ...state,
+        meetingId: action.meetingId
       };
     default:
       return state;
