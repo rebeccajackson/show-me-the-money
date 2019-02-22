@@ -3,7 +3,7 @@ import { getApiToken } from "../utils/auth";
 import newMeeting from "../containers/NewMeeting";
 
 export const SHOW_ERROR = "SHOW_ERROR";
-export const REQUEST_MEETINGS = "REQUEST_MEETINGS";
+export const REQUEST_MEETING = "REQUEST_MEETINGS";
 export const RECEIVE_MEETINGS = "RECEIVE_MEETINGS";
 export const CREATE_MEETING = "CREATE_MEETING";
 export const SET_MEETING = "SET_MEETING";
@@ -16,6 +16,13 @@ export const createMeeting = (newMeeting) => {
     }
 }
 
+export const loading = () => {
+    return {
+        type: REQUEST_MEETINGS,
+        loading: true
+    };
+};
+
 export const setMeetingId = meetingId => {
     return {
         type: SET_MEETING,
@@ -23,23 +30,15 @@ export const setMeetingId = meetingId => {
     };
 };
 
-export const loading = () => {
-    return {
-        type: REQUEST_MEETINGS,
-        loading: true
-    }
-}
-
 export const receiveMeetings = meetings => {
     return {
         type: RECEIVE_MEETINGS,
         meetings: meetings,
         loading: false
-    }
-}
+    };
+};
 
 export const requestMeeting = meeting => {
-    console.log(meeting);
     return {
         type: REQUEST_MEETING,
         meeting: meeting,
@@ -52,16 +51,16 @@ export const receiveUsers = users => {
         type: RECEIVE_USERS,
         users: users,
         loading: false
-    }
-}
+    };
+};
 
 export const sendMeeting = meeting => {
     return {
         type: SAVE_MEETING,
         meeting: meeting,
         loading: false
-    }
-}
+    };
+};
 
 export const showError = (errorMessage) => {
     return {
@@ -73,7 +72,6 @@ export const showError = (errorMessage) => {
 
 export function getAllMeetings() {
     return dispatch => {
-        dispatch(loading())
         return request
             .get('api/meetings')
             .then(res => {
@@ -87,7 +85,7 @@ export function getAllMeetings() {
 
 export function getMeetingById(meetingId) {
     return dispatch => {
-        dispatch(loading())
+        // dispatch(loading())
         return request
             .get(`api/meetings/${meetingId}`)
             .then(res => {
@@ -118,17 +116,17 @@ export function getUsersByMeeting(meetingId) {
     }
 }
 
-
 export function saveMeeting(meeting) {
+    console.log(meeting);
     return dispatch => {
         dispatch(loading());
         return request
             .post(`/api/meetings`, meeting)
             .then(res => {
-                dispatch(getAllMeetings())
+                dispatch(getAllMeetings());
             })
             .catch(err => {
-                dispatch(showError(err.message))
-            })
+                dispatch(showError(err.message));
+            });
     };
 }

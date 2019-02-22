@@ -62,7 +62,7 @@ export class DetailModal extends Component {
             </header>
             <section className="modal-card-body">
               {this.props.meeting.meetings.map(detail => {
-                if (detail.id == this.props.meetings.meetingId) {
+                if (detail.id == this.props.meeting.meetingId) {
                   return (
                     <div>
                       <img src="/dollar.svg" width="45px" />
