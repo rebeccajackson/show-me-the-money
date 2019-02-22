@@ -68,8 +68,7 @@ export class DetailModal extends Component {
                       <img src="/dollar.svg" width="45px" />
                       <p>Name: {detail.title}</p>
                       <p>
-                        Duration (ms): {this.msToTime(detail.duration)}
-                        {/* {() => this.msToTime.bind(this, detail.duration)} */}
+                        Duration (H:M:S): {this.msToTime(detail.duration)}
                       </p>
                       <p>Cost: ${detail.cost}</p>
                       <br />
