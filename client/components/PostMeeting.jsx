@@ -13,15 +13,13 @@ export class PostMeeting extends React.Component {
 
   componentDidMount(){
     const { dispatch } = this.props
-    console.log()
-    dispatch(getMeetingById(this.state.meetingId))
+    dispatch(getMeetingById(this.props.match.params.meetingId))
   }
     
 
 
   render() {
-      
-    console.log('props', this.props)
+    console.log(this.props)
     return <React.Fragment>{this.props.meeting && <div className="container">
       <h2 className="title is-2">{this.props.meeting.title}</h2>
       <h3>Duration: {this.props.meeting.duration}</h3>
@@ -31,8 +29,9 @@ export class PostMeeting extends React.Component {
 }
 
 function mapStateToProps(state) {
+
   return {
-    meeting: state.meetings.meetings[0]
+    meeting: state.meetings.meeting
   }
 }
 
