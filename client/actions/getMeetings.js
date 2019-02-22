@@ -85,7 +85,7 @@ export function getMeetings(meetingId) {
         if (!res.body.length == 1) {
           dispatch(showError("nothing g"));
         } else {
-          dispatch(receiveMeetings(res.body));
+          dispatch(receiveMeeting(res.body));
         }
       })
       .catch(err => {
@@ -99,9 +99,10 @@ export function saveMeeting(meeting) {
   return dispatch => {
     dispatch(loading());
     return request
-      .post(`/api/v1/meetings/save`, meeting)
+      .post(`/api/meetings`, meeting)
       .then(res => {
-        dispatch(receiveMeetings(res.body));
+        console.log(res)
+        dispatch(getAllMeetings());
       })
       .catch(err => {
         dispatch(showError(err.message));

@@ -16,7 +16,7 @@ router.get('/', (req,res)=>{
 
 // POST /api/meetings
 router.post('/', (req,res) => {
-  console.log('routes save meeting by title', req.body)
+  console.log('routes save meeting', req.body)
   db.saveMeeting(req.body)
   .then(something =>{
     console.log('routes something', something)
@@ -38,7 +38,6 @@ router.get('/:id', (req,res)=>{
   const meetingId = req.params.id
   db.getMeetingById(meetingId) //needs to output an array of meeting objects
   .then(meeting => {
-    console.log(meeting)
     res.json(meeting)
   })
 })
