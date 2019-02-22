@@ -8,7 +8,8 @@ export class DetailModal extends Component {
     super(props);
     this.state = {
       meetingId: null,
-      showAttendees: false
+      showAttendees: false,
+      meetingData: ""
     };
     this.renderAttendees = this.renderAttendees.bind(this);
   }
@@ -20,12 +21,14 @@ export class DetailModal extends Component {
   }
 
   renderAttendees(id) {
+    console.log(id);
     this.setState(prevState => ({
       showAttendees: !prevState.showAttendees
     }));
     this.props.getMeeting(id);
   }
 
+  // Change ms to Time - duration
   msToTime(duration) {
     var milliseconds = parseInt((duration % 1000) / 100),
       seconds = parseInt((duration / 1000) % 60),
@@ -40,7 +43,10 @@ export class DetailModal extends Component {
   }
 
   render() {
-    // could map here and the return below!
+    // {this.state.meetingdata = this.props.meeting.meetings.map(detail => {
+    //   if (detail.id == this.props.meetings.meetingId) {
+    //     return
+    //   }
     if (this.props.isShowing) {
       return (
         <div className="modal is-active">
@@ -62,7 +68,7 @@ export class DetailModal extends Component {
                       <img src="/dollar.svg" width="45px" />
                       <p>Name: {detail.title}</p>
                       <p>
-                        Duration:{detail.duration}
+                        Duration (ms): {detail.duration}
                         {/* {() => this.msToTime.bind(this, detail.duration)} */}
                       </p>
                       <p>Cost: ${detail.cost}</p>
