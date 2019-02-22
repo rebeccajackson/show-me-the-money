@@ -23,7 +23,6 @@ export const receiveMeetings = meetings => {
 }
 
 export const requestMeeting = meeting => {
-  console.log(meeting);
     return {
         type: REQUEST_MEETING,
         meeting: meeting,

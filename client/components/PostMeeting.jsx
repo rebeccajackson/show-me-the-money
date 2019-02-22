@@ -19,11 +19,22 @@ export class PostMeeting extends React.Component {
 
 
   render() {
-    console.log(this.props)
+    if (this.props.meeting) {console.log(this.props.meeting.attendees[0].first_name)}
     return <React.Fragment>{this.props.meeting && <div className="container">
-      <h2 className="title is-2">{this.props.meeting.title}</h2>
+      <h2 className="title is-2">Review: {this.props.meeting.title}</h2>
       <h3>Duration: {this.props.meeting.duration}</h3>
-      <h3>Total Cost: </h3>
+      <h3>Total Cost: {this.props.meeting.cost}</h3>
+      <br/>
+      {/* <table className={'table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered'}>
+        <tbody>
+          <tr>Attendees:</tr>
+          {this.props.meeting.attendees.map((attendee, i) => {
+            <tr>
+              <td key={i}>{attendee.first_name}</td>
+            </tr>
+          })}
+        </tbody>
+      </table> */}
     </div>}</React.Fragment>
   }
 }
