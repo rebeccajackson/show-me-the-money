@@ -16,6 +16,13 @@ export const createMeeting = (newMeeting) => {
     }
 }
 
+export const loading = () => {
+    return {
+        type: REQUEST_MEETINGS,
+        loading: true
+    };
+};
+
 export const setMeetingId = meetingId => {
     return {
         type: SET_MEETING,
@@ -23,20 +30,13 @@ export const setMeetingId = meetingId => {
     };
 };
 
-export const loading = () => {
-    return {
-        type: REQUEST_MEETINGS,
-        loading: true
-    }
-}
-
 export const receiveMeetings = meetings => {
     return {
         type: RECEIVE_MEETINGS,
         meetings: meetings,
         loading: false
-    }
-}
+    };
+};
 
 export const requestMeeting = meeting => {
     console.log(meeting);
@@ -52,16 +52,16 @@ export const receiveUsers = users => {
         type: RECEIVE_USERS,
         users: users,
         loading: false
-    }
-}
+    };
+};
 
 export const sendMeeting = meeting => {
     return {
         type: SAVE_MEETING,
         meeting: meeting,
         loading: false
-    }
-}
+    };
+};
 
 export const showError = (errorMessage) => {
     return {
@@ -117,7 +117,6 @@ export function getUsersByMeeting(meetingId) {
             })
     }
 }
-
 
 export function saveMeeting(meeting) {
     console.log(meeting);

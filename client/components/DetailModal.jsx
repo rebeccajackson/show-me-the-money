@@ -62,13 +62,13 @@ export class DetailModal extends Component {
             </header>
             <section className="modal-card-body">
               {this.props.meeting.meetings.map(detail => {
-                if (detail.id == this.props.meetings.meetingId) {
+                if (detail.id == this.props.meeting.meetingId) {
                   return (
                     <div>
                       <img src="/dollar.svg" width="45px" />
                       <p>Name: {detail.title}</p>
                       <p>
-                        Duration (ms): {detail.duration}
+                        Duration (ms): {this.msToTime(detail.duration)}
                         {/* {() => this.msToTime.bind(this, detail.duration)} */}
                       </p>
                       <p>Cost: ${detail.cost}</p>
