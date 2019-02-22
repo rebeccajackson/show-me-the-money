@@ -5,8 +5,9 @@ import {
   REQUEST_MEETINGS,
   SHOW_ERROR,
   SAVE_MEETING,
-  REQUEST_MEETING,
-  SET_MEETING
+  CREATE_MEETING,
+  SET_MEETING,
+  REQUEST_MEETING
 } from "../actions/getMeetings.js";
 
 const initialState = {
@@ -41,6 +42,11 @@ function meetings(state = initialState, action) {
       return {
         ...state,
         loading: action.loading
+      };
+    case CREATE_MEETING:
+      return {
+        ...state,
+        newMeeting: action.newMeeting
       };
     case SET_MEETING:
       return {

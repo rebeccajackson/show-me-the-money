@@ -60,6 +60,7 @@
     "react-test-renderer": "^16.8.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.2.0",
+    "serve-favicon": "^2.5.0",
     "superagent": "^4.1.0"
   }
 }

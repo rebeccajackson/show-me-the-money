@@ -73,4 +73,4 @@ function getAllUsers(testDb) {
   const db = testDb || connection
   return db('users')
     .select('users.first_name as firstName', 'users.last_name as lastName', 'users.hourly_wage as hourlyWage')
-}
+ }
