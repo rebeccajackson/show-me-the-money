@@ -1,13 +1,19 @@
+// Breaking up imports by type can make it easier to differentiate
+// on first glance what has and hasn't been imported
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
 import { getAllMeetings, setMeetingId } from "../actions/getMeetings";
+
 import MeetingHistory from "../components/MeetingHistory";
 import DetailModal from "../components/DetailModal";
+
 import { LineChart } from "react-easy-chart";
 
 export class History extends Component {
   constructor(props) {
     super(props);
+    // initial state for this container
     this.state = {
       meetingId: null,
       graphData: "", // need data for chart
@@ -21,6 +27,7 @@ export class History extends Component {
     this.setMeetingId = this.setMeetingId.bind(this);
   }
 
+  // sets the meetingId on the global store to match this meetings Id
   setMeetingId = id => {
     this.props.setMeetingId(id);
   };
@@ -49,10 +56,13 @@ export class History extends Component {
   }
 
   render() {
+    // this could be brought out into a function
     let costOverTime = [[]];
     this.state.meetings.map(meeting =>
       costOverTime[0].push({ x: meeting.id, y: meeting.cost })
     );
+    // this.state.meetings array is ordered most recent to oldest
+    // costOverTime is reversed so oldest entries are plotted first
     costOverTime[0] = costOverTime[0].reverse();
     console.log(costOverTime);
     return (
@@ -77,6 +87,7 @@ export class History extends Component {
           />
           <div className="column is-half">
             <article className="tile is-child notification ">
+              {/* When loading is finished &  set to false display chart */}
               {!this.state.loading && (
                 <LineChart
                   grid
