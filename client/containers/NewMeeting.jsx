@@ -1,109 +1,136 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-import { createMeeting } from '../actions/getMeetings'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { createMeeting } from "../actions/getMeetings";
 
 class NewMeeting extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       attendees: [],
-      first_name: '',
-      last_name: '',
-      hourly_wage: '',
-      meeting_owner: '',
-      meeting_name: '',
+      first_name: "",
+      last_name: "",
+      hourly_wage: "",
+      meeting_owner: "",
+      meeting_name: "",
       show_history: false
-    }
-    // bound this to handleAdd()
-    this.handleAdd = this.handleAdd.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    };
   }
 
   componentDidMount() {
-    this.setState({meeting_owner: this.props.meeting_owner})
+    this.setState({ meeting_owner: this.props.meeting_owner });
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
-    this.props.createMeeting(this.state)
-    this.props.history.push('/meeting')
-  }
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.createMeeting(this.state);
+    this.props.history.push("/meeting");
+  };
 
-  handleAdd() {
+  handleAdd = () => {
     var newAttendee = {
       firstName: this.state.first_name,
       lastName: this.state.last_name,
       hourlyWage: this.state.hourly_wage
-    }
-    
-    let curAttendees = this.state.attendees
-    curAttendees.push(newAttendee)
-    this.setState({ attendees: curAttendees })
+    };
 
+    let curAttendees = this.state.attendees;
+    curAttendees.push(newAttendee);
     this.setState({
-      first_name: '',
-      last_name: '',
-      hourly_wage: ''
-  })
+      attendees: curAttendees,
+      first_name: "",
+      last_name: "",
+      hourly_wage: ""
+    });
+  };
 
-
-  }
-
-  handleChange(e) {
+  handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   render() {
     return (
-      <React.Fragment>
-        < div className="columns" >
-          < div className="column is-half" >
-            <h2>Add Meeting Attendees Below</h2>
-            <input className="input" type="text" name="first_name" placeholder="First Name" value={this.state.first_name} onChange={(e) => this.handleChange(e)}></input>
-            <input className="input" type="text" name="last_name" placeholder="Last Name" value={this.state.last_name} onChange={(e) => this.handleChange(e)}></input>
-            <input className="input" type="number" name="hourly_wage" placeholder="Attendee Hourly Wage" value={this.state.hourly_wage} onChange={(e) => this.handleChange(e)}></input>
-            <div className="field is-grouped">
+      <div className="columns">
+        <div className="column is-half">
+          <h2>Add Meeting Attendees Below</h2>
+          <input
+            className="input"
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            onChange={this.handleChange}
+          />
+          <input
+            className="input"
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            onChange={this.handleChange}
+          />
+          <input
+            className="input"
+            type="number"
+            name="hourly_wage"
+            placeholder="Attendee Hourly Wage"
+            onChange={this.handleChange}
+          />
+          <div className="field is-grouped">
+            <div className="control">
+              <button className="button is-link" onClick={this.handleAdd}>
+                Add
+              </button>
               <div className="control">
-                <button className="button is-link" onClick={() => this.handleAdd()}>Add</button>
-                <div className="control">
-                  <form>
-                    <input className="input" type="text" name="meeting_name" placeholder="Meeting Name" onChange={(e) => this.handleChange(e)} required></input>
-                    <button className="button is-link" type="submit" onClick={this.handleSubmit}>Submit</button>
-                  </form>
-                  
-                </div>
+                <form>
+                  <input
+                    className="input"
+                    type="text"
+                    name="meeting_name"
+                    placeholder="Meeting Name"
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <button
+                    className="button is-link"
+                    type="submit"
+                    onClick={this.handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </form>
               </div>
             </div>
-          </div >
-          < div className="column" >
-            <ul>
-              {this.state.attendees.map((attendee) => {
-                return (
-                  <li>{attendee.firstName} {attendee.lastName}</li>
-              )
+          </div>
+        </div>
+        <div className="column">
+          <ul>
+            {this.state.attendees.map(attendee => {
+              return (
+                <li>
+                  {attendee.firstName} {attendee.lastName}
+                </li>
+              );
             })}
-            </ul>
-          </div >
-        </div >
-
-      </React.Fragment>
-    )
+          </ul>
+        </div>
+      </div>
+    );
   }
 }
 
 function MapDispatchToProps(dispatch) {
-  return bindActionCreators({ createMeeting }, dispatch)
+  return bindActionCreators({ createMeeting }, dispatch);
 }
 
 function mapStateToProps(state) {
   return {
     meeting_owner: state.auth.user.user_name
-  }
+  };
 }
 
-export default connect(mapStateToProps, MapDispatchToProps)(NewMeeting)
-
+export default connect(
+  mapStateToProps,
+  MapDispatchToProps
+)(NewMeeting);
