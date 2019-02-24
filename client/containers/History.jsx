@@ -1,24 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { LineChart } from "react-easy-chart";
+
 import { getAllMeetings, setMeetingId } from "../actions/getMeetings";
 import MeetingHistory from "../components/MeetingHistory";
 import DetailModal from "../components/DetailModal";
-import { LineChart } from "react-easy-chart";
 
 export class History extends Component {
   constructor(props) {
     super(props);
     this.state = {
       meetingId: null,
-      graphData: "", // need data for chart
-      displayGraph: true, // could toggle view- use Sparklines
+      graphData: "",
+      displayGraph: true,
       meetings: [],
       showModal: false,
       loading: true
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.setMeetingId = this.setMeetingId.bind(this);
   }
 
   setMeetingId = id => {
